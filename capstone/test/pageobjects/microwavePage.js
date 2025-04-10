@@ -25,7 +25,6 @@ class microwavePage extends Launch {
         "GASLAND", "Cooler Depot", "Unique Appliances", "URBAN LIVING"
     ];
 
-    //private methods
     get #brandDropDown(){
         return $('[aria-label="Brand"] > button')
     }
@@ -69,7 +68,7 @@ class microwavePage extends Launch {
         await this.#apply.click();
     }
 
-    //public methods
+
     async getToMicrowaves(){
         let selector = `//div[contains(text(), "Appliances")]/ancestor::div[contains(@data-testid, "category")]`
         await $(selector).click()

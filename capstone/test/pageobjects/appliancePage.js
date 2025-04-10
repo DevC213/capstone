@@ -1,13 +1,8 @@
 const { $ } = require('@wdio/globals')
 const Launch = require('./launch');
 
-/**
- * sub page containing specific selectors and methods for a specific page
- */
 class AppliancePage extends Launch {
-    /**
-     * define selectors using getter methods
-     */
+
     #appliances = ["Kitchen Appliance Packages", "Refrigerators", "Ranges"
                         , "Dishwashers", "Microwaves","Over-the-Range Microwaves"
                         ,"Range Hoods", "Freezers", "Wall Ovens", "Cooktops"
