@@ -1,8 +1,8 @@
-﻿const appliances = require('../pageobjects/appliancePage')
+﻿const appliances = require('../pageobjects/appliances')
 
 describe('Appliances', () => {
     it('Take you to correct appliance page', async () => {
-        await appliances.open()
+        await appliances.launchHomeDepot()
         await appliances.testItems()
     })
 })

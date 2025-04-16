@@ -2,7 +2,7 @@
 const Launch = require('./launch');
 
 
-class microwavePage extends Launch {
+class Microwaves extends Launch {
 
     #microwaveBrandsKV = {
         "LG": false, "GE": false, "Whirlpool": false, "Samsung": false, "Frigidaire": false, "KitchenAid": false, "Sharp": false,
@@ -12,7 +12,7 @@ class microwavePage extends Launch {
         "Danby": false, "Summit Appliance": false, "Zephyr": false, "Cosmo": false, "HADEN": false, "Midea": false, "Koolmore": false,
         "Avanti": false, "Chefman": false, "Unbranded": false, "Kucht": false, "Impecca": false, "West Bend": false, "Brama": false,
         "Costway": false, "Total Chef": false, "Premium LEVELLA": false, "Bevoi": false, "Equator": false, "Bunpeony": false,
-        "GASLAND": false, "Cooler Depot": false, "Unique Appliances": false, "URBAN LIVING": false
+        "GASLAND": false, "Cooler Depot": false, "Unique Appliances": false, "URBAN LIVING": false, "Waring Commercial": false
     };
     #microwaveBrands = [
         "LG", "GE", "Whirlpool", "Samsung", "Frigidaire", "KitchenAid", "Sharp",
@@ -20,7 +20,7 @@ class microwavePage extends Launch {
         "Bosch", "Toshiba", "BLACK+DECKER", "Commercial CHEF", "Emerson", "Amana", "Nostalgia",
         "Galanz", "Hotpoint", "Cuisinart", "Farberware", "Thor Kitchen", "Forno", "Haier",
         "Danby", "Summit Appliance", "Zephyr", "Cosmo", "HADEN", "Midea", "Koolmore",
-        "Chefman", "Avanti", "Unbranded","Impecca", "Kucht",  "West Bend", "Brama",
+        "Chefman", "Waring Commercial" ,"Avanti", "Unbranded","Impecca", "Kucht",  "West Bend", "Brama",
         "Costway", "Total Chef", "Premium LEVELLA", "Bevoi", "Equator", "Bunpeony",
         "GASLAND", "Cooler Depot", "Unique Appliances", "URBAN LIVING"
     ];
@@ -44,12 +44,24 @@ class microwavePage extends Launch {
         let item = `//p[contains(text(), "${brand}")]`
         return $(item)
     }
+    get #appliancesPageSelector() {
+        let selector = `//div[contains(text(), "Appliances")]/ancestor::div[contains(@data-testid, "category")]`
+        return $(selector);
+    }
+    get #microwavePageSelector() {
+        let selector = `//a[contains(text(), "Microwaves")]`
+        return $(selector)
+    }
     async #selectRandomBrands(number){
         await this.#brandDropDown.click()
         for(let i = 0; i < number; i++){
             let value = Math.floor(Math.random()*this.#microwaveBrands.length);
             this.#microwaveBrandsKV[this.#microwaveBrands[value]] = true;
             let item = await this.#getBrandSelector(this.#microwaveBrands[value])
+            if(!await item.isExisting()){
+                i--
+                continue
+            }
             await item.click();
         }
         await expect(this.#apply).toBeClickable()
@@ -70,10 +82,8 @@ class microwavePage extends Launch {
 
 
     async getToMicrowaves(){
-        let selector = `//div[contains(text(), "Appliances")]/ancestor::div[contains(@data-testid, "category")]`
-        await $(selector).click()
-        selector = `//a[contains(text(), "Microwaves")]`
-        await $(selector).click()
+        await this.#appliancesPageSelector.click()
+        await this.#microwavePageSelector.click();
     }
     async microRandomTest(){
         await this.#selectRandomBrands(3)
@@ -130,9 +140,9 @@ class microwavePage extends Launch {
         await expect(!(this.#apply).toBeClickable())
         await close.click()
     }
-    open() {
-        return super.open('https://www.homedepot.com/b/Appliances-Microwaves/N-5yc1vZc3ok');
+    launchHomeDepot() {
+        return super.launchHomeDepot('https://www.homedepot.com/b/Appliances-Microwaves/N-5yc1vZc3ok');
     }
 }
 
-module.exports = new microwavePage();
+module.exports = new Microwaves();

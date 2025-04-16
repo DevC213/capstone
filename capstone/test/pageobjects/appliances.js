@@ -1,7 +1,7 @@
 const { $ } = require('@wdio/globals')
 const Launch = require('./launch');
 
-class AppliancePage extends Launch {
+class Appliances extends Launch {
 
     #appliances = ["Kitchen Appliance Packages", "Refrigerators", "Ranges"
                         , "Dishwashers", "Microwaves","Over-the-Range Microwaves"
@@ -40,9 +40,9 @@ class AppliancePage extends Launch {
             await this.#applianceRtn.click()
         }
     }
-    open(){
-        return super.open('https://www.homedepot.com/b/Appliances/N-5yc1vZbv1w');
+    launchHomeDepot(){
+        return super.launchHomeDepot('https://www.homedepot.com/b/Appliances/N-5yc1vZbv1w');
     }
 }
 
-module.exports = new AppliancePage();
+module.exports = new Appliances();

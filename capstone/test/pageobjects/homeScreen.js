@@ -1,7 +1,7 @@
 const { $ } = require('@wdio/globals')
 const Launch = require('./launch');
 
-class MainPage extends Launch {
+class HomeScreen extends Launch {
 
     #brands = ["The Company Store","Vissani",
         "Home Decorators Collection","Hampton Bay",
@@ -23,7 +23,6 @@ class MainPage extends Launch {
     get #homeButton(){
         return $('[class="sui-w-11 lg:sui-w-16"]')
     }
-
     async ourBrands(){
         for(const i of this.#brands){
             let item = await this.#ourBrandsItem(i)
@@ -52,10 +51,10 @@ class MainPage extends Launch {
             }
         }
     }
-    open () {
-        return super.open('https://www.homedepot.com/');
+    launchHomeDepot() {
+        return super.launchHomeDepot('https://www.homedepot.com/');
     }
     
 }
 
-module.exports = new MainPage();
+module.exports = new HomeScreen();
